@@ -43,7 +43,7 @@ with open('converted/netsuite_journals.csv','w') as csv_file:
             for nominal in data[year][month_end]:
                 for location in data[year][month_end][nominal]:
                     for department in data[year][month_end][nominal][location]:
-                        description = year + ' O/Bal Cumulative'
+                        description = year + ' O/Bal Non-Cumulative'
                         value = data[year][month_end][nominal][location][department]
                         if round(value, 2) != 0:
                             if value > 0:
