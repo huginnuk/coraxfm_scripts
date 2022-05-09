@@ -7,7 +7,7 @@ import json
 from datetime import timedelta
 
 data = {}
-go_live_date = ''
+go_live_date = '01-01-2022'
 
 
 def get_month_end(date):
@@ -44,9 +44,6 @@ for file in os.listdir(export_dir):
                     if month_end_obj <= month_end_obj_test:
                         nominal = row[3]
 
-                        if nominal in nominal_remap:
-                            nominal = nominal_remap[nominal]
-                        
                         department = row[9].lower()
                         location = row[10].lower()
 
@@ -61,14 +58,14 @@ for file in os.listdir(export_dir):
                         if nominal not in data[year][month_end]:
                             data[year][month_end][nominal] = {}
                         
-                        if brand not in data[year][month_end][nominal]:
-                            data[year][month_end][nominal][brand] = {}
+                        if location not in data[year][month_end][nominal]:
+                            data[year][month_end][nominal][location] = {}
+
+                        if department not in data[year][month_end][nominal][location]:
+                            data[year][month_end][nominal][location][department] = 0
                         
-                        if department not in data[year][month_end][nominal][brand]:
-                            data[year][month_end][nominal][brand][department] = 0
-                        
-                        data[year][month_end][nominal][brand][department] += value
+                        data[year][month_end][nominal][location][department] += value
 
 
-with open('output.txt', 'w') as outputfile:
+with open('converted/output.txt', 'w') as outputfile:
     outputfile.write(json.dumps(data, indent=4))
